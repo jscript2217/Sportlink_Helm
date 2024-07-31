@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-configmap
+  namespace: stage
+data:
+  redis_host: {your_redis_host_url}
+  db_host: {your_db_host_url}

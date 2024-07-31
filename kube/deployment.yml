@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: list-svc
+  labels:
+    app: list-app
+    project: stage
+  namespace: stage
+spec:
+  type: ClusterIP
+  selector:
+    app: list-app
+  ports:
+  - port: 80
+    targetPort: 8080
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: list-deploy
+  labels:
+    app: list-app
+    project: stage
+  namespace: stage
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: list-app
+  template:
+    metadata:
+      labels:
+        app: list-app
+    spec:
+      containers:
+      - name: list-app
+        image: 637423456584.dkr.ecr.ap-northeast-2.amazonaws.com/sportslink:v1
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_HOST # DB 엔드포인트
+          valueFrom:
+            configMapKeyRef:
+              name: app-configmap
+              key: db_host
+        - name: REDIS_HOST # Redis 엔드포인트
+          valueFrom:
+            configMapKeyRef:
+              name: app-configmap
+              key: redis_host
+        - name: DB_USERNAME # DB user
+          valueFrom:
+            secretKeyRef:
+              name: app-secret
+              key: db_username
+        - name: DB_PASSWORD # DB apssword
+          valueFrom:
+            secretKeyRef:
+              name: app-secret
+              key: db_password

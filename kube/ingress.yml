@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress1
+  namespace: stage
+  annotations:
+    #kubernetes.io/ingress.class: alb ( deprecated 예정 -> 'spec.ingressClassName' 사용 )
+    alb.ingress.kubernetes.io/load-balancer-name: my-eks-alb
+    alb.ingress.kubernetes.io/scheme: internet-facing 
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ingressClassName: alb
+  defaultBackend:
+    service:
+      name: sportslink
+      port:
+        number: 80
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: sportslink
+            port:
+              number: 80

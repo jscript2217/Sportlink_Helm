@@ -1,0 +1,30 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ printf "%s-ingress" (include "sportslink.fullname" .) }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "sportslink.labels" . | nindent 4 }}
+  annotations:
+    {{- range $key, $value := .Values.ingress.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  ingressClassName: {{ .Values.ingress.spec.ingressClassName }}
+  defaultBackend:
+    service:
+      name: {{ printf "%s-service" (include "sportslink.fullname" .) }}
+      port:
+        number: {{ .Values.service.port }}
+  rules:
+  - http:
+      paths:
+      - pathType: {{ .Values.ingress.hosts.paths.pathType }}
+        path: {{ .Values.ingress.hosts.paths.path }}
+        backend:
+          service:
+            name: {{ printf "%s-service" (include "sportslink.fullname" .) }}
+            port:
+              number: {{ .Values.service.port }}
+{{- end }}

@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s-app" (include "sportslink.fullname" .) }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "sportslink.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "sportslink.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "sportslink.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.targetPort }}
+              protocol: TCP
+          env:
+          - name: DB_HOST # DB 엔드포인트
+            valueFrom:
+              configMapKeyRef:
+                name: app-configmap
+                key: db_host
+          - name: REDIS_HOST # Redis 엔드포인트
+            valueFrom:
+              configMapKeyRef:
+                name: app-configmap
+                key: redis_host
+          - name: DB_USERNAME # DB user
+            valueFrom:
+              secretKeyRef:
+                name: app-secret
+                key: db_username
+          - name: DB_PASSWORD # DB apssword
+            valueFrom:
+              secretKeyRef:
+                name: app-secret
+                key: db_password
