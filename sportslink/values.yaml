@@ -2,6 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+revisionHistoryLimit: 2
 replicaCount: 2
 image:
   repository: 637423456584.dkr.ecr.ap-northeast-2.amazonaws.com/sportlink-ecr
