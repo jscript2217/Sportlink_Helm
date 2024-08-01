@@ -52,6 +52,7 @@ ingress:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     external-dns.alpha.kubernetes.io/hostname: sportslink.store
+  host: sportslink.store
   hosts:
     paths:
       path: /
