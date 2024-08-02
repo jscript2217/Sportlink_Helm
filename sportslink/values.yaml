@@ -24,8 +24,12 @@ resources:
     cpu: "400m"
     memory: "512Mi"
 
-autoscaling:
-  enabled: false
+hpa:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 50
+
 # Additional volumes on the output Deployment definition.
 volumes: []
 # - name: foo
