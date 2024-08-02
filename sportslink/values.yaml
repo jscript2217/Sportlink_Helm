@@ -24,6 +24,9 @@ resources:
     cpu: "400m"
     memory: "512Mi"
 
+autoscaling:
+  enabled: false
+
 hpa:
   enabled: true
   minReplicas: 2
