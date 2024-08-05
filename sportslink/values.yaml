@@ -51,14 +51,15 @@ podLabels: {}
 ingress:
   enabled: true
   annotations:
-    alb.ingress.kubernetes.io/load-balancer-name: prod-eks-alb
+    alb.ingress.kubernetes.io/load-balancer-name: stage-eks-alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
-    external-dns.alpha.kubernetes.io/hostname: sportlink.store
+    external-dns.alpha.kubernetes.io/hostname: eeeni.store
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+    # ACM에서 자격증명 arn 주소 입력
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:637423456584:certificate/44c21aeb-dd1a-405d-8acf-fb5232ad9538
     alb.ingress.kubernetes.io/ssl-redirect: '443'
-  host: sportlink.store
+  host: eeeni.store
   hosts:
     paths:
       path: /
