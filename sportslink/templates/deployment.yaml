@@ -71,3 +71,13 @@ spec:
               secretKeyRef:
                 name: app-secret
                 key: db_password
+          - name: AWS_ACCESS_KEY_ID # S3 연결용 aws access key id
+          valueFrom:
+            secretKeyRef:
+              name: app-secret
+              key: aws_access_key_id
+          - name: AWS_SECRET_ACCESS_KEY # S3 연결용 secret access key
+            valueFrom:
+              secretKeyRef:
+                name: app-secret
+                key: aws_secret_access_key
