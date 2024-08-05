@@ -8,7 +8,7 @@ image:
   repository: 637423456584.dkr.ecr.ap-northeast-2.amazonaws.com/sportlink-ecr
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "c7962-stage"
+  tag: "8a620-stage"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
