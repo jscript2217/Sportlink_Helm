@@ -1,9 +1,9 @@
 # Main Branch Push 발생 시 AWS ECR Push Action을 수행 ( AWS ECS 관련 ENV, Job 삭제 )
 name: Automerge				
 on:								     # WorkFlow 동작 트리거영역
-  pull_request:							     # "main" Branche에서 pull_request 발생 시 WorkFlow 동작
+  pull_request:							     # "stage" Branche에서 pull_request 발생 시 WorkFlow 동작
     branches:							     
-      - main
+      - stage
     types:
       - labeled
 
