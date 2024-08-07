@@ -48,7 +48,7 @@ podLabels: {}
 ingress:
   enabled: true
   annotations:
-    alb.ingress.kubernetes.io/load-balancer-name: prod-eks-alb
+    alb.ingress.kubernetes.io/load-balancer-name: stage-eks-alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     external-dns.alpha.kubernetes.io/hostname: eeeni.store
